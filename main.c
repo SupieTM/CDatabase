@@ -9,8 +9,17 @@ int main(int argc, char *argv[])
 {
 
 
+  FILE* file = fopen("testfile.txt", "r");
+
   char* temp;
-  int main = 0;
+
+  while(readline(&temp, file)) {
+    printf("%s\n", temp);
+  }
+
+  fclose(file);
+
+
 
   return EXIT_SUCCESS;
 }

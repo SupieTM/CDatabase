@@ -5,8 +5,6 @@
 
 int readline(char **buffer, FILE *file) {
 
-  //If there is any memory in the buffer free it first
-  free(*buffer);
 
   // Initazlie a variable to hold the bufsize, and the index, and the return str
   int buffsize = 2;

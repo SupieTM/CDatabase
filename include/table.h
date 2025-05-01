@@ -1,4 +1,4 @@
-#ifndef table_H;
+#ifndef table_H
 #define table_H
 
 typedef struct table tb;
