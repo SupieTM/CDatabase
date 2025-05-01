@@ -15,11 +15,24 @@ typedef struct pnode {
 typedef struct table {
   int rows;
   int columns;
-  char** labels;
+  char*** labels; // A list of strings. 
   pn* startParentNode;
 } tb;
 
 
+/*
+*            (rows)   (data) <- stored in void
+*   table -> pnode -> left
+*              v
+*            pnode -> left
+*
+*
+*
+*
+*/
+
+
+//Initalize an empty table.
 tb *createTable() {
   tb* temp = (tb*)malloc(sizeof(*temp));
   temp->columns = 0;
@@ -36,7 +49,22 @@ tb *recreateTable() {
 
 void insertRow(tb* table) {
 
+  //Inlialize a new parent node
+  pn* temppn = (pn*)malloc(sizeof(*temppn));
+  temppn->rowNum = -1;
+  temppn->next = NULL;
+  temppn->left = NULL;
+
+  
+
+  if (table->startParentNode == NULL) {
+    table->startParentNode = temppn;
+    insertData(temppn, table);
+  }
+
 }
 
 
+void insertData(pn pNode, tb* table) {
+}
 
