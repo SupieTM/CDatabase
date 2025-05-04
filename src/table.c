@@ -1,6 +1,6 @@
 #include "../include/table.h"
-#include <cassert>
 #include <stdlib.h>
+#include <stdio.h>
 
 typedef struct node {
   void* data;
@@ -82,7 +82,7 @@ void insertData(tb *table, int rowNum, char* label, void* _data) {
   }
 
   if (tempnode == NULL) {
-    assert("Invalid Index, in insertData");
+    printf("Invalid index in insertData\n");
     return;
   }
 
