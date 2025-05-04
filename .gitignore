@@ -1,2 +1,2 @@
-./DB.exe
-./testfile.txt
+*.exe
+*.txt
