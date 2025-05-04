@@ -3,6 +3,8 @@
 
 #include "../include/readline.h"
 
+
+//Return 0 for error/EOF/End of Line, return 1 for no error
 int readline(char **buffer, FILE *file) {
 
 
