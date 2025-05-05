@@ -1,81 +1,94 @@
 #include "../include/table.h"
-#include <stdlib.h>
+#include <corecrt_search.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 typedef struct node {
-  void* data;
-  struct node* next;
+  void *data;
+  char *label;
+  struct node *next;
 } nd;
 
 typedef struct pnode {
-  struct pnode* next;
+  struct pnode *next;
   int rowNum;
-  nd* left;
+  nd *left;
 } pn;
 
 typedef struct table {
   int rows;
   int columns;
-  char** labels;
-  pn* startParentNode;
+  char **labels;
+  pn *startParentNode;
 } tb;
 
-
 /*
-*            (rows)   (data) <- stored in void
-*   table -> pnode -> left
-*              v
-*            pnode -> left
-*
-*
-*
-*
-*/
+ *            (rows)   (data) <- stored in void
+ *   table -> pnode -> left
+ *              v
+ *            pnode -> left
+ *
+ *
+ *
+ *
+ */
 
-
-//Initalize an empty table.
+// Initalize an empty table.
 tb *createTable() {
-  tb* temp = (tb*)malloc(sizeof(*temp));
+  tb *temp = (tb *)malloc(sizeof(*temp));
   temp->columns = 0;
   temp->rows = 0;
   temp->startParentNode = NULL;
-  
+
   return temp;
 }
 
-tb *recreateTable() {
-  return NULL;
-}
+tb *recreateTable() { return NULL; }
 
-void insertRow(tb* table) {
+void insertRow(tb *table) {
 
-  //Inlialize a new parent node
-  pn* temppn = (pn*)malloc(sizeof(*temppn));
+  // Inlialize a new parent node
+  pn *temppn = (pn *)malloc(sizeof(*temppn));
   temppn->rowNum = -1;
-  temppn->next = NULL;
   temppn->left = NULL;
+  temppn->next = NULL;
 
-  //If the table is empty place it here
+  //Loop through and add empty data
+  nd *tempNode = temppn->left;
+  for (int i = 0; i < table->columns; i++) {
+    nd *cNode = (nd *)malloc(sizeof(*cNode));
+    cNode->label = table->labels[i];
+    cNode->data = NULL;
+    cNode->next = NULL;
+
+    if (tempNode == temppn->left) {
+      temppn->left = cNode;
+    } else {
+      tempNode->next = cNode;
+    }
+    tempNode = cNode;
+  }
+
+  // If the table is empty place it here
   if (table->startParentNode == NULL) {
     table->startParentNode = temppn;
     return;
   }
 
-  //Traverse the table until the end
-  pn* tempnode = table->startParentNode;
-  while(tempnode->next != NULL) {
+  // Traverse the table until the end
+  pn *tempnode = table->startParentNode;
+  while (tempnode->next != NULL) {
     tempnode = tempnode->next;
-
   }
 
-  //Place the new node at the end
+  // Place the new node at the end
   tempnode->next = temppn;
 }
 
-void insertData(tb *table, int rowNum, char* label, void* _data) {
-  pn* tempnode = table->startParentNode;
+void insertData(tb *table, int rowNum, char *label, void *_data) {
+  pn *tempnode = table->startParentNode;
 
-  //Find the node
+  // Find the node
   int i = 0;
   while (tempnode != NULL && i < rowNum) {
     tempnode = tempnode->next;
@@ -85,11 +98,4 @@ void insertData(tb *table, int rowNum, char* label, void* _data) {
     printf("Invalid index in insertData\n");
     return;
   }
-
-
 }
-
-
-
-
-
