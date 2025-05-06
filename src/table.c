@@ -1,7 +1,9 @@
 #include "../include/table.h"
-#include <corecrt_search.h>
+
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+
 
 typedef struct node {
   void *data;
@@ -14,13 +16,6 @@ typedef struct pnode {
   int rowNum;
   nd *left;
 } pn;
-
-typedef struct table {
-  int rows;
-  int columns;
-  char **labels;
-  pn *startParentNode;
-} tb;
 
 /*
  *            (rows)   (data) <- stored in void
@@ -85,7 +80,7 @@ void insertRow(tb *table) {
   tempnode->next = temppn;
 }
 
-void insertData(tb *table, int rowNum, char *label, void *_data) {
+void insertData(tb *table, int rowNum, char *_label, void *_data) {
   pn *tempnode = table->startParentNode;
 
   // Find the node
@@ -98,4 +93,17 @@ void insertData(tb *table, int rowNum, char *label, void *_data) {
     printf("Invalid index in insertData\n");
     return;
   }
+
+  nd* tempnd = tempnode->left;
+
+  while (tempnd != NULL && !strcmp(tempnd->label, _label)) {
+    tempnd = tempnd->next;
+  }
+
+  if (tempnd == NULL) {
+    printf("Couldn't find label\n");
+    return;
+  }
+
+  tempnd->data = _data;
 }

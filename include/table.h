@@ -1,7 +1,16 @@
 #ifndef table_H
 #define table_H
 
-typedef struct table tb;
+
+typedef struct pnode pn;
+
+typedef struct table {
+  int rows;
+  int columns;
+  char **labels;
+  pn *startParentNode;
+} tb;
+
 
 tb *createTable();
 

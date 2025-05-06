@@ -9,15 +9,19 @@ int main(int argc, char *argv[])
 {
 
 
-  FILE* file = fopen("testfile.txt", "r");
+  tb* table = createTable();
 
-  char* temp;
+  table->labels = (char**)malloc(sizeof(char*) * 10);
+  char* selector = "123456789";
 
-  while(readline(&temp, file)) {
-    printf("%s\n", temp);
+  for (int i = 0; i < 10; i++) {
+    table->labels[i] = (char*)malloc(sizeof(char*));
+    table->labels[i] = "Hello";
   }
 
-  fclose(file);
+  for (int i = 0; i < 10; i++) {
+    printf("%s\n", table->labels[i]);
+  }
 
 
 
