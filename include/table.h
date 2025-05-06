@@ -5,16 +5,18 @@
 typedef struct pnode pn;
 
 typedef struct table {
-  int rows;
-  int columns;
   char **labels;
   pn *startParentNode;
+  int rows;
+  int columns;
 } tb;
 
 
 tb *createTable();
 
 tb *recreateTable();
+
+void insertLabel(tb* table, char* _label);
 
 void insertRow(tb* table);
 

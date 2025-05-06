@@ -4,7 +4,7 @@
 #include <stdio.h>
 
 
-int readline(char **buffer, FILE *file);
+int readline(char **buffer, FILE *file, char delim);
 
 
 #endif

@@ -5,7 +5,7 @@
 
 
 //Return 0 for error/EOF/End of Line, return 1 for no error
-int readline(char **buffer, FILE *file) {
+int readline(char **buffer, FILE *file, char delim) {
 
 
   // Initazlie a variable to hold the bufsize, and the index, and the return str
@@ -21,7 +21,7 @@ int readline(char **buffer, FILE *file) {
   // Initalize a temporary char
   char c = 0;
 
-  while ((c = getc(file)), c != EOF && c != '\0' && c != '\n') {
+  while ((c = getc(file)), c != EOF && c != '\0' && c != '\n' && c != delim) {
     if (index >= buffsize) {
       buffsize *= 2;
 

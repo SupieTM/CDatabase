@@ -38,6 +38,10 @@ tb *createTable() {
   return temp;
 }
 
+void insertLabel(tb* table, char* _label) {
+
+}
+
 tb *recreateTable() { return NULL; }
 
 void insertRow(tb *table) {
