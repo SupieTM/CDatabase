@@ -16,7 +16,7 @@ tb *createTable();
 
 tb *recreateTable();
 
-void insertLabel(tb* table, char* _label);
+void insertLabels(tb* table, char* filename);
 
 void insertRow(tb* table);
 

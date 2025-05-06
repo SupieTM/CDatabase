@@ -8,14 +8,15 @@
 int main(int argc, char *argv[])
 {
 
-  FILE* file = fopen("test.txt", "r");
+  tb* table = createTable();
 
-  char* buffer;
-  while (readline(&buffer, file, ',')) {
-    printf("%s\n", buffer);
+
+  insertLabels(table, "test.txt"); 
+
+  for (int i = 0; i < 5; i++) {
+    printf("%s\n", table->labels[i]);
   }
 
-  fclose(file);
 
 
 

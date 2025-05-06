@@ -1,9 +1,10 @@
 #include "../include/table.h"
 
+#include "../include/readline.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
 
 typedef struct node {
   void *data;
@@ -38,8 +39,26 @@ tb *createTable() {
   return temp;
 }
 
-void insertLabel(tb* table, char* _label) {
+//This function takes the first line of the database file, splits it by ',' then inserts each item into the table->labels attributes
+void insertLabels(tb *table, char *filename) {
 
+  // Get the file
+  FILE *file = fopen(filename, "r");
+  char *buffer;
+  table->labels = (char **)malloc(sizeof(char *));
+  int i = 0;
+
+  while (readline(&buffer, file, ',')) {
+    //This is just here so it dosen't realloc after the first malloc
+    if (i) {
+      table->labels = (char **)realloc(table->labels, sizeof(char *) * (i + 1));
+    }
+    table->labels[i] = (char *)malloc(sizeof(buffer));
+    table->labels[i] = buffer;
+    i++;
+  }
+
+  fclose(file);
 }
 
 tb *recreateTable() { return NULL; }
@@ -52,7 +71,7 @@ void insertRow(tb *table) {
   temppn->left = NULL;
   temppn->next = NULL;
 
-  //Loop through and add empty data
+  // Loop through and add empty data
   nd *tempNode = temppn->left;
   for (int i = 0; i < table->columns; i++) {
     nd *cNode = (nd *)malloc(sizeof(*cNode));
@@ -98,7 +117,7 @@ void insertData(tb *table, int rowNum, char *_label, void *_data) {
     return;
   }
 
-  nd* tempnd = tempnode->left;
+  nd *tempnd = tempnode->left;
 
   while (tempnd != NULL && !strcmp(tempnd->label, _label)) {
     tempnd = tempnd->next;
