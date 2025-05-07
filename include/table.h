@@ -14,7 +14,7 @@ typedef struct table {
 
 tb *createTable();
 
-tb *recreateTable();
+tb *recreateTable(char* file);
 
 void insertLabels(tb* table, char* filename);
 

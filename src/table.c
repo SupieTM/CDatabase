@@ -39,7 +39,8 @@ tb *createTable() {
   return temp;
 }
 
-//This function takes the first line of the database file, splits it by ',' then inserts each item into the table->labels attributes
+// This function takes the first line of the database file, splits it by ','
+// then inserts each item into the table->labels attributes
 void insertLabels(tb *table, char *filename) {
 
   // Get the file
@@ -49,7 +50,7 @@ void insertLabels(tb *table, char *filename) {
   int i = 0;
 
   while (readline(&buffer, file, ',')) {
-    //This is just here so it dosen't realloc after the first malloc
+    // This is just here so it dosen't realloc after the first malloc
     if (i) {
       table->labels = (char **)realloc(table->labels, sizeof(char *) * (i + 1));
     }
@@ -58,10 +59,22 @@ void insertLabels(tb *table, char *filename) {
     i++;
   }
 
+  // Set the table's columns
+  table->columns = i + 1;
+
   fclose(file);
 }
 
-tb *recreateTable() { return NULL; }
+tb *recreateTable(char *file) {
+  tb *temp = (tb *)malloc(sizeof(*temp));
+  temp->columns = 0;
+  temp->rows = 0;
+  temp->startParentNode = NULL;
+
+  insertLabels(temp, file);
+
+  return temp;
+}
 
 void insertRow(tb *table) {
 
